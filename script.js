@@ -5,7 +5,7 @@ function flipCard() {
     this.classList.toggle('flip');
 }
 
-//adiciona evento de clique na carta, para cada carta
+//adiciona evento de clique para cada carta
 cards.forEach((card) => {
     card.addEventListener('click', flipCard)
 });
