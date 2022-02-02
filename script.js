@@ -57,6 +57,14 @@ function resetBoard() {
     [firstCard, secondCard] = [null, null];
 }
 
+//funcao que embaralha as cartas
+(function shuffle() {
+    cards.forEach((card) => {
+        let ramdomPosition = Math.floor(Math.random() * 12);
+        card.style.order = ramdomPosition;
+    })
+})();// IIFE
+
 //adiciona evento de clique para cada carta
 cards.forEach((card) => {
     card.addEventListener('click', flipCard)
