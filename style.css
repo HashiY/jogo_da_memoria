@@ -29,6 +29,11 @@ body {
     transform: scale(1);/*preservar o tamanho original para quando clicar diminuir o tamanho*/
 }
 
+.card:active{
+    transform: scale(0.97);/*diminui e aumenta proporcionalmente */
+    transition: transform .2s;
+}
+
 .card-front,
 .card-back {
   width: 100%;
