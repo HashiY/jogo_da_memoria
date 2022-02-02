@@ -3,6 +3,7 @@ let hasFlippedCard = false;
 let firstCard, secondCard;
 //Bloqueia o tabuleiro para nao ocorrer o bug de conseguir clicar em mais que duas cartas
 let lockBoard = false;
+var p = 0;
 
 //funcao para virar a carta
 function flipCard() {
@@ -25,7 +26,7 @@ function flipCard() {
 function disableCards() {
     firstCard.removeEventListener('click', flipCard);
     secondCard.removeEventListener('click', flipCard);
-
+    p++;
     resetBoard();
 }
 
@@ -55,6 +56,8 @@ function checkForMatch(){
 function resetBoard() {
     [hasFlippedCard, lockBoard] = [false, false];
     [firstCard, secondCard] = [null, null];
+
+    restartGame();
 }
 
 //funcao que embaralha as cartas
@@ -64,6 +67,23 @@ function resetBoard() {
         card.style.order = ramdomPosition;
     })
 })();// IIFE
+
+function restartGame(){
+    if(p == 6){
+        setTimeout(() =>{
+            cards.forEach((card) => { 
+                let ramdomPosition = Math.floor(Math.random() * 12);
+                card.classList.remove('flip');
+                card.addEventListener('click', flipCard);
+                setTimeout(() =>{
+                    card.style.order = ramdomPosition;
+                }, 10);
+                
+                p = 0;
+            })
+        }, 1500);
+    }
+}
 
 //adiciona evento de clique para cada carta
 cards.forEach((card) => {
