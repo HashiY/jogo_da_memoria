@@ -4,10 +4,11 @@ let firstCard, secondCard;
 //Bloqueia o tabuleiro para nao ocorrer o bug de conseguir clicar em mais que duas cartas
 let lockBoard = false;
 
-//função para virar a carta
+//funcao para virar a carta
 function flipCard() {
     if(lockBoard) return;
-
+    if(this === firstCard) return; // para nao clicar 2 vezes na mesma carta
+    
     this.classList.add('flip');
     if(!hasFlippedCard){
         hasFlippedCard = true;
@@ -20,21 +21,27 @@ function flipCard() {
     checkForMatch();
 }
 
-//função que desabilita as cartas
+//funcao que desabilita as cartas
 function disableCards() {
     firstCard.removeEventListener('click', flipCard);
     secondCard.removeEventListener('click', flipCard);
+
+    resetBoard();
 }
 
-//funcão que desvira as cartas
+//funcao que desvira as cartas
 function unflipCards() {
+    lockBoard = true;
+
     setTimeout(() => {
         firstCard.classList.remove('flip');
         secondCard.classList.remove('flip');
+
+        resetBoard();
     }, 1500);
 }
 
-//função que checa se as cartas são iguais
+//funcao que checa se as cartas sao iguais
 function checkForMatch(){
     //Compara as data-card que criou no html
     if(firstCard.dataset.card === secondCard.dataset.card) {
@@ -42,6 +49,12 @@ function checkForMatch(){
         return;
     }
     unflipCards();
+}
+
+//funcao que reseta o tabuleiro
+function resetBoard() {
+    [hasFlippedCard, lockBoard] = [false, false];
+    [firstCard, secondCard] = [null, null];
 }
 
 //adiciona evento de clique para cada carta
